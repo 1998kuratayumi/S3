@@ -1,9 +1,12 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+  impressionist :actions=> [:show,:index]
 
   def show
     @book = Book.find(params[:id])
+    @book_comment = BookComment.new
+    impressionist(@book, nil, unique: [:session_hash])
   end
 
   def index
@@ -15,6 +18,7 @@ class BooksController < ApplicationController
         a.favorited_users.includes(:favorites).where(created_at: from...to).size
       }
     @book = Book.new
+    
   end
 
   def create

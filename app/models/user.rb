@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :user_rooms, dependent: :destroy
   has_many :chats, dependent: :destroy
+  
 
   
   # 自分がフォローされる（被フォロー）側の関係性
@@ -30,6 +31,14 @@ class User < ApplicationRecord
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
+
+  # def get_profile_image(size)
+  #   unless profile_image.attached?
+  #     file_path = Rails.root.join('app/assets/images/no_image.jpg')
+  #     profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/png')
+  #   end
+  #   profile_image.variant(resize: size).processed
+  # end
   
   def follow(user)
     relationships.create(followed_id: user.id)
