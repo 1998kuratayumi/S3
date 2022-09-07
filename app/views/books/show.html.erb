@@ -20,6 +20,24 @@
           <td>コメント数: <%= @book.book_comments.count %></td>
           <td>閲覧数<%=  @book.impressionist_count %></td>
           <td><%= render "favorites/btn", book: @book %></td>
+          <td>
+            <div class="relative-post-evaluation">
+              <span>評価：</span>
+              <span id="star-rate-<%= @book.id %>"></span>
+                <script>
+                  $('#star-rate-<%= @book.id %>').raty({
+                    size: 36,
+                    starOff: "<%= asset_path('star-off.png') %>",
+                    starOn: "<%= asset_path('star-on.png') %>",
+                    starHalf: "<%= asset_path('star-half.png') %>",
+                    half: true,   # 星半分表示
+                    readOnly: true,   # 読み取り専用
+                    score: <%= @book.evaluation %>,   # 星評価の表示
+                  });
+                </script>
+              <%= @book.evaluation %>
+            </div>
+          </td>
           <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
