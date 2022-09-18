@@ -6,17 +6,14 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
-    impressionist(@book, nil, unique: [:session_hash])
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book.id)
+      current_user.view_counts.create(book_id: @book.id)
+    end
+    # impressionist(@book, nil, unique: [:session_hash])
   end
 
   def index
-    to  = Time.current.at_end_of_day
-    from  = (to - 6.day).at_beginning_of_day
-    @books = Book.includes(:favorited_users).
-      sort {|a,b| 
-        b.favorited_users.includes(:favorites).where(created_at: from...to).size <=> 
-        a.favorited_users.includes(:favorites).where(created_at: from...to).size
-      }
+    @books = Book.all
     @book = Book.new
     
   end
