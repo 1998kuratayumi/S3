@@ -29,23 +29,50 @@
 <br>
 
 <label class="text-user"><h3>7日間の投稿数の比較</h3></label>
-<canvas id="myChart" width="300" height="100"> </canvas>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',                      
+<label class="text-user"><h3>7日間の投稿数の比較</h3></label>
+
+<canvas id="myChart"></canvas>
+<script>
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+    /* グラフの種類 (bar、line、rader、pie、doughnut、polarArea、bubble などがある) */
+    type: "line",
     data: {
-        labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
-        datasets: [{
-            label: "投稿数",
-            data: [<%= books.created_6days.count %>, <%= books.created_5days.count %>, <%= books.created_4days.count %>, <%= books.created_3days.count %>, <%= books.created_2days.count %>, <%= yesterday_book.count %>, <%= today_book.count%>],
-            backgroundColor: 'rgba(255, 80, 120, 1.0)',
-            borderColor: 'rgba(255, 80, 120, 1.0)',
-            fill: false
-        }]
+      labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+      /* データの設定 */
+      datasets: [
+        {
+          /* グラフ全体のラベル */
+          label: "投稿数",
+          /* グラフのデータ(上から時計回り) */
+          data: [<%= books.created_6days.count %>, <%= books.created_5days.count %>, <%= books.created_4days.count %>, <%= books.created_3days.count %>, <%= books.created_2days.count %>, <%= yesterday_book.count %>, <%= today_book.count%>],
+          /* グラフを塗りつぶすかどうか（falseにすると枠線だけのグラフになる）*/
+          fill: true,
+          /* 背景色 */
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          /* 枠線色 */
+          borderColor: "rgb(255, 99, 132)",
+          /* ポイントを塗りつぶす色 */
+          pointBackgroundColor: "rgb(255, 99, 132)",
+          /* ポイントの枠線色 */
+          pointBorderColor: "#fff",
+          /* ホバー時のポイントの背景色 */
+          pointHoverBackgroundColor: "#fff",
+          /* ホバー時のポイントの枠線色 */
+          pointHoverBorderColor: "rgb(255, 99, 132)",
+        },
+      ],
     },
-});
+    //オプションの設定
+    options: {
+      elements: {
+        line: {
+          /* 枠線の太さ */
+          borderWidth: 3,
+        },
+      },
+    },
+  });
 </script>
-
 
