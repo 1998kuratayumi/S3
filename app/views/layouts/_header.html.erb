@@ -28,10 +28,6 @@
               <i class="fas fa-sign-out-alt"></i> logout
             <% end %>
           </li>
-          <%= form_with url: category_path, method: :get, local: true do |f| %>
-              <%= f.text_field :category %>
-              <%= f.submit '検索' %>
-          <% end %>
           <% else %>
           <li>
             <%= link_to root_path,class: 'nav-link text-light' do %>

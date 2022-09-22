@@ -11,6 +11,10 @@
   <body>
     <%= render 'layouts/header' %>
       <main>
+        <%= form_with url: category_path, method: :get, local: true do |f| %>
+              <%= f.text_field :category %>
+              <%= f.submit '検索' %>
+          <% end %>
         <p id="notice"><%= notice %></p>
         <%= yield %>
       </main>
